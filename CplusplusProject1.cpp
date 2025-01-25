@@ -9,7 +9,7 @@
 // #####################################################################################
 
 #include <iostream>
-#include <cstdlib>		 // For random number
+#include <cstdlib>	     // For random number
 #include <iomanip>	     // For setw
 using namespace std;
 
@@ -191,7 +191,7 @@ void fill3x3MatrixWithOrderedNumbers(int matrix[3][3]) {
 
 // #####################################################################################
 // ################################################
-//          Traspose Matrix
+//          Transpose Matrix
 // ################################################
 // void fill3x3MatrixWithOrderedNumbers(int matrix[3][3])
 void transposeMatrix(int matrix[3][3], int tMatrix[3][3]) {
