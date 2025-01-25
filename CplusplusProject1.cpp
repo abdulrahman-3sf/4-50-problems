@@ -9,7 +9,7 @@
 // #####################################################################################
 
 #include <iostream>
-#include <cstdlib>		 // For random number
+#include <cstdlib>	     // For random number
 #include <iomanip>	     // For setw
 using namespace std;
 
@@ -191,7 +191,7 @@ void fill3x3MatrixWithOrderedNumbers(int matrix[3][3]) {
 
 // #####################################################################################
 // ################################################
-//          Traspose Matrix
+//          Transpose Matrix
 // ################################################
 // void fill3x3MatrixWithOrderedNumbers(int matrix[3][3])
 void transposeMatrix(int matrix[3][3], int tMatrix[3][3]) {
@@ -299,10 +299,7 @@ int main() {
 	// Seeds the random number generator in C++, called only once
 	srand((unsigned)time(NULL));
 
-	int matrix[3][3];
-	fill3x3MatrixWithNumbersFromTO(matrix, 1, 10);
-	printMatrix(matrix);
-	cout << "The Sum of Matrix: " << sumOfMatrix(matrix);
+
 
 	return 0;
 }
