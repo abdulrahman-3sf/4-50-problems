@@ -8,7 +8,8 @@
 
 // #####################################################################################
 
-#include <iostream>
+#include <iostream>      // For cin, cout
+#include <string>        // For string
 #include <cstdlib>	     // For random number
 #include <iomanip>	     // For setw
 using namespace std;
@@ -47,7 +48,6 @@ void printMatrix(int matrix[3][3]) {
 	}
 }
 
-
 // TO USE IT RUN THIS IN MAIN
 // int martix[3][3];
 // fill3x3MatrixWithRandomNumbers(martix);
@@ -73,7 +73,6 @@ void printTheSumOfTheRows(int matrix[3][3]) {
 	}
 }
 // void printMatrix(int matrix[3][3])
-
 
 // TO USE IT RUN THIS IN MAIN
 // int matrix[3][3];
@@ -101,7 +100,6 @@ void printTheSumOfTheRows(int sumMatrix[3]) {
 	}
 }
 // void printMatrix(int matrix[3][3])
-
 
 // TO USE IT RUN THIS IN MAIN
 // int matrix[3][3];
@@ -132,7 +130,6 @@ void printTheSumOfTheCol(int matrix[3][3]) {
 }
 // void printMatrix(int matrix[3][3])
 
-
 // TO USE IT RUN THIS IN MAIN
 // int matrix[3][3];
 // fill3x3MatrixWithRandomNumbers(matrix);
@@ -159,7 +156,6 @@ void printTheSumOfTheCol(int sumMatrix[3]) {
 }
 // void printMatrix(int matrix[3][3])
 
-
 // TO USE IT RUN THIS IN MAIN
 // int matrix[3][3];
 // int sumMatrix[3];
@@ -183,7 +179,6 @@ void fill3x3MatrixWithOrderedNumbers(int matrix[3][3]) {
 	}
 }
 // void printMatrix(int matrix[3][3])
-
 
 // TO USE IT RUN THIS IN MAIN
 // int matrix[3][3];
@@ -229,7 +224,6 @@ void multiplyTwoMatrix(int matrix[3][3], int matrix2[3][3], int multiplyedMatrix
 }
 // void printMatrix(int matrix[3][3])
 
-
 // TO USE IT RUN THIS IN MAIN
 // int matrix[3][3];
 // int matrix2[3][3];
@@ -264,7 +258,6 @@ void printMiddleCol(int matrix[3][3]) {
 }
 // void printMatrix(int matrix[3][3])
 
-
 // TO USE IT RUN THIS IN MAIN
 // int matrix[3][3];
 // fill3x3MatrixWithNumbersFromTO(matrix, 1, 10);
@@ -292,7 +285,6 @@ int sumOfMatrix(int matrix[3][3]) {
 }
 // void printMatrix(int matrix[3][3])
 
-
 // TO USE IT RUN THIS IN MAIN
 // int matrix[3][3];
 // fill3x3MatrixWithNumbersFromTO(matrix, 1, 10);
@@ -314,7 +306,6 @@ bool areTheMatricesEqual(int matrix[3][3], int matrix2[3][3]) {
 	return sumMatrix1 == sumMatrix2;
 }
 // void printMatrix(int matrix[3][3])
-
 
 // TO USE IT RUN THIS IN MAIN
 // int matrix1[3][3], matrix2[3][3];
@@ -343,7 +334,6 @@ bool areTheMatricesTypical(int matrix1[3][3], int matrix2[3][3]) {
 	return true;
 }
 // void printMatrix(int matrix[3][3])
-
 
 // TO USE IT RUN THIS IN MAIN
 // int matrix1[3][3], matrix2[3][3];
@@ -375,7 +365,6 @@ bool isIdentityMatrix(int matrix[3][3]) {
 }
 // void printMatrix(int matrix[3][3])
 
-
 // TO USE IT RUN THIS IN MAIN
 // int matrix2[3][3] = { {1,0,0}, {0,1,0}, {0,0,1} };
 // cout << "Matrix1:\n";
@@ -403,7 +392,6 @@ bool isScalarMatrix(int matrix[3][3]) {
 }
 // void printMatrix(int matrix[3][3])
 
-
 // TO USE IT RUN THIS IN MAIN
 // int matrix2[3][3] = { {4,0,0}, {0,4,0}, {0,0,4} };
 // cout << "Matrix1:\n";
@@ -428,7 +416,6 @@ int countNumberInMatrix(int matrix[3][3], int number) {
 	return counter;
 }
 // void printMatrix(int matrix[3][3])
-
 
 // TO USE IT RUN THIS IN MAIN
 // int matrix1[3][3];
@@ -456,7 +443,6 @@ bool isSparceMatrix(int matrix[3][3]) {
 }
 // void printMatrix(int matrix[3][3])
 
-
 // TO USE IT RUN THIS IN MAIN
 // int matrix1[3][3];
 // fill3x3MatrixWithNumbersFromTo(matrix1, 0, 1);
@@ -481,7 +467,6 @@ bool findNumberInMatrix(int matrix[3][3], int number) {
 	return false;
 }
 // void printMatrix(int matrix[3][3])
-
 
 // TO USE IT RUN THIS IN MAIN
 // int matrix1[3][3];
@@ -512,7 +497,6 @@ void printIntersectedNumbers(int matrix1[3][3], int matrix2[3][3]) {
 	}
 }
 // void printMatrix(int matrix[3][3])
-
 
 // TO USE IT RUN THIS IN MAIN
 // int matrix1[3][3], matrix2[3][3];
@@ -557,7 +541,6 @@ int maxNumberInMatrix(int matrix[3][3]) {
 }
 // void printMatrix(int matrix[3][3])
 
-
 // TO USE IT RUN THIS IN MAIN
 // int matrix1[3][3];
 // fill3x3MatrixWithNumbersFromTo(matrix1, 0, 10);
@@ -584,7 +567,6 @@ bool isPalindromeMatix(int matrix[3][3]) {
 }
 // void printMatrix(int matrix[3][3])
 
-
 // TO USE IT RUN THIS IN MAIN
 // int matrix1[3][3] = { {1, 2, 1},{5, 5, 5},{7, 3, 7} };
 // cout << "Matrix1:\n";
@@ -594,12 +576,260 @@ bool isPalindromeMatix(int matrix[3][3]) {
 
 // #####################################################################################
 // ################################################
+//          Fibonacci Series
+// ################################################
+void printFibonacciUsingLoops(int number) {
+	int fibNumber = 0;
+	int prev2 = 0, prev1 = 1;
+
+	cout << "1\t";
+	for (int i = 2; i <= number; i++) {
+		fibNumber = prev2 + prev1;
+		cout << fibNumber << "\t";
+		prev2 = prev1;
+		prev1 = fibNumber;
+	}
+}
+
+// TO USE IT RUN THIS IN MAIN
+// printFibonacciUsingLoops(10);
+// #####################################################################################
+
+// #####################################################################################
+// ####################################################
+//          Fibonacci Series With Recursion
+// ####################################################
+int FibonacciUsingRecursion(int number) {
+	if (number < 2) 
+		return number;
+	else 
+		return FibonacciUsingRecursion(number - 1) + FibonacciUsingRecursion(number - 2); 
+}
+void printFibonacciUsingRecursion(int number) {
+	for (int i = 1; i <= number; i++) {
+		cout << FibonacciUsingRecursion(i) << "\t";
+	}
+}
+
+// TO USE IT RUN THIS IN MAIN
+// printFibonacciUsingRecursion(10);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Print First Letter of Each Word
+// ################################################
+string readString() {
+	string str;
+
+	cout << "Enter a string: ";
+	getline(cin, str);
+
+	return str;
+}
+void printFirstLetterOfEachStatement(string statement) {
+	bool isFirstLetter = true;
+
+	for (int i = 0; i < statement.length(); i++) {
+		if (statement[i] != ' ' && isFirstLetter)
+			cout << statement[i] << endl;
+
+		isFirstLetter = (statement[i] == ' ' ? true : false);
+	}
+
+	//string word = "";
+	//for (int i = 0; i < statement.length(); i++) {
+	//	if (statement[i] != ' ') {
+	//		word += statement[i];
+	//	}		
+	//	else {
+	//		cout << word[0] << endl;
+	//		word = "";
+	//	}
+
+	//	if (i == statement.length() - 1)
+	//		cout << word[0] << endl;
+	//}
+}
+
+// TO USE IT RUN THIS IN MAIN
+// printFirstLetterOfEachStatement(readString());
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Upper First Letter of Each Word
+// ################################################
+// string readString()
+void upperFirstLetterOfEachWord(string& statement) {
+	bool isFirstLetter = true;
+
+	for (int i = 0; i < statement.length(); i++) {
+		if (statement[i] != ' ' && isFirstLetter)
+			statement[i] = toupper(statement[i]);
+
+		isFirstLetter = (statement[i] == ' ' ? true : false);
+	}
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string str = readString();
+// upperFirstLetterOfEachWord(str);
+// cout << str;
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Lower First Letter of Each Word
+// ################################################
+// string readString()
+void lowerFirstLetterOfEachWord(string& statement) {
+	bool isFirstLetter = true;
+
+	for (int i = 0; i < statement.length(); i++) {
+		if (statement[i] != ' ' && isFirstLetter)
+			statement[i] = tolower(statement[i]);
+
+		isFirstLetter = (statement[i] == ' ' ? true : false);
+	}
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string str = readString();
+// lowerFirstLetterOfEachWord(str);
+// cout << str;
+// #####################################################################################
+
+// #####################################################################################
+// ####################################################
+//          Upper/Lower All Letters of a String
+// ####################################################
+// string readString()
+string upperAllLetters(string statement) {
+	string upperStatement = statement;
+	
+	for (int i = 0; i < statement.length(); i++) {
+		upperStatement[i] = toupper(upperStatement[i]);
+	}
+
+	return upperStatement;
+}
+string lowerAllLetters(string statement) {
+	string lowerStatement = statement;
+
+	for (int i = 0; i < statement.length(); i++) {
+		lowerStatement[i] = tolower(lowerStatement[i]);
+	}
+
+	return lowerStatement;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string str = readString();
+// cout << "\nUpper: " << upperAllLetters(str) << endl;
+// cout << "\nLower: " << lowerAllLetters(str);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Invert Charcter Case
+// ################################################
+char readChar() {
+	char letter;
+
+	cout << "Enter a letter: ";
+	cin >> letter;
+
+	return letter;
+}
+char invertLetter(char letter) {
+	return isupper(letter) ? tolower(letter) : toupper(letter);
+
+	// if (65 <= letter && letter <= 90)
+	// 	letter = tolower(letter);
+	// else
+	// 	letter = toupper(letter);
+
+	// return letter;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// char str = readChar();
+// cout << invertLetter(str);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Invert All Letters Case
+// ################################################
+// string readString()
+// char invertLetter(char letter)
+string invertAllLetters(string statement) {
+	for (int i = 0; i < statement.length(); i++) {
+		statement[i] = invertLetter(statement[i]);
+	}
+
+	return statement;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// cout << invertAllLetters(readString());
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Count Small/Capital Letters
+// ################################################
+// string readString()
+int countSmallLetters(string statement) {
+	int counter = 0;
+	for (int i = 0; i < statement.length(); i++) {
+		if (islower(statement[i]))
+			counter++;
+	}
+	return counter;
+}
+int countCapitaletters(string statement) {
+	int counter = 0;
+	for (int i = 0; i < statement.length(); i++) {
+		if (isupper(statement[i]))
+			counter++;
+	}
+	return counter;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string statement = readString();
+// cout << statement.length() << endl;
+// cout << countSmallLetters(statement) << endl;
+// cout << countCapitaletters(statement) << endl;
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//     Count Specific Letter
+// ################################################
+// string readString()
+// char readChar()
+int countSpecificLetter(char letter, string statement) {
+	int counter = 0;
+
+	for (int i = 0; i < statement.length(); i++) {
+		if (letter == statement[i])
+			counter++;
+	}
+
+	return counter;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// cout << countSpecificLetter(readChar(), readString());
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
 //          
 // ################################################
-// int randomNumber(int from, int to)
-// void fill3x3MatrixWithNumbersFromTo(int matrix[3][3], int from, int to)
-
-// void printMatrix(int matrix[3][3])
 
 
 // TO USE IT RUN THIS IN MAIN
