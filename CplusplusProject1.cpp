@@ -10,8 +10,9 @@
 
 #include <iostream>      // For cin, cout
 #include <string>        // For string
-#include <cstdlib>	     // For random number
-#include <iomanip>	     // For setw
+#include <vector>        // For vector
+#include <cstdlib>       // For random number
+#include <iomanip>       // For setw
 using namespace std;
 
 // Commnly Use
@@ -828,18 +829,275 @@ int countSpecificLetter(char letter, string statement) {
 
 // #####################################################################################
 // ################################################
-//          
+//        Count Letters (Match Case)  
 // ################################################
+// string readString()
+// char readChar()
+int countLetters(char letter, string statement, bool matchCase=true) {
+	int counter = 0;
 
+	if (matchCase) {
+		for (int i = 0; i < statement.length(); i++) {
+			if (letter == statement[i])
+				counter++;
+		}
+	}
+	else {
+		for (int i = 0; i < statement.length(); i++) {
+			if (tolower(letter) == tolower(statement[i]))
+				counter++;
+		}
+	}
+
+	return counter;
+}
 
 // TO USE IT RUN THIS IN MAIN
+// string statement = readString();
+// char letter = readChar();
+// cout << "Letter " << (char)letter << " count = " << countLetters(letter, statement) << endl;
+// cout << "Letter " << (char)tolower(letter) << " and " << (char)toupper(letter) << "count = " << countLetters(letter, statement, false);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Is Vowel?
+// ################################################
+// char readChar()
+bool isVowel(char letter) {
+
+	letter = tolower(letter);
+
+	return ((letter == 'a') || (letter == 'e') || (letter == 'i') || (letter == 'o') || (letter == 'u'));
+
+	//char vowels[5] = { 'a', 'e', 'i', 'o', 'u' };
+
+	//for (int i = 0; i < 5; i++) {
+	//	if (letter == vowels[i])
+	//		return true;
+	//}
+
+	//return false;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// char letter = readChar();
+// cout << isVowel(letter);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Count Vowels
+// ################################################
+// char readChar()
+// bool isVowel(char letter)
+int countVowels(string statement) {
+	int counter = 0;
+
+	for (int i = 0; i < statement.length(); i++) {
+		if (isVowel(statement[i]))
+			counter++;
+	}
+
+	return counter;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string statement = readString();
+// cout << countVowels(statement);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//        String ln VoweIs AII Print  
+// ################################################
+// char readChar()
+// bool isVowel(char letter)
+void printVowelsInString(string statement) {
+	for (int i = 0; i < statement.length(); i++) {
+		if (isVowel(statement[i]))
+			cout << statement[i] << '\t';
+	}
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string statement = readString();
+// printVowelsInString(statement);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Print Each Word In String
+// ################################################
+// string readString()
+void printEachWordInString(string statement) {
+	string newWord = "";
+	string delimiter = " ";
+	int position = 0;
+
+	while ((position = statement.find(delimiter)) != string::npos) {
+		newWord = statement.substr(0, position);
+		if (newWord != "")
+			cout << newWord << endl;
+
+		statement.erase(0, position + delimiter.length());
+	}
+
+	if (statement != "")
+		cout << statement;
+
+	//string newWord = "";
+	//char currentLetter;
+	//
+	//for (int i = 0; i < statement.length(); i++) {
+	//	currentLetter = statement[i];
+	//	if (currentLetter != ' ') {
+	//		newWord += currentLetter;
+	//	}
+	//	if (currentLetter == ' ' || i == statement.length() - 1) {
+	//		cout << newWord << endl;
+	//		newWord = "";
+	//	}
+	//}
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string statement = readString();
+// printEachWordInString(statement);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Count Each Word In String
+// ################################################
+// string readString()
+int countNumberOfWordsInString(string statement) {
+	int counter = 0;
+	string newWord = "";
+	string deli = " ";
+	int position = 0;
+
+	while ((position = statement.find(deli)) != string::npos) {
+		newWord = statement.substr(0, position);
+		if (newWord != "")
+			counter++;
+		statement.erase(0, position + deli.length());
+	}
+	if (newWord != "")
+		counter++;
+
+	return counter;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Split Function
+// ################################################
+// string readString()
+vector<string> splitString(string statement, string deli=" ") {
+	vector<string> vNames;
+	string newWord = "";
+	int pos = 0;
+
+	while ((pos = statement.find(deli)) != string::npos) {
+		newWord = statement.substr(0, pos);
+		if (newWord != "")
+			vNames.push_back(newWord);
+		statement.erase(0, pos + deli.length());
+	}
+	if (newWord != "")
+		vNames.push_back(statement);
+
+	return vNames;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string statement = readString();
+// vector<string> vNames;
+// vNames = splitString(statement, ",");
+// cout << "Tokens: " << vNames.size() << endl;
+// for (string& word : vNames)
+//     cout << word << endl;
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          TrimLeft, TrimRight, Trim
+// ################################################
+// string readString()
+string trimLeft(string statement) {
+	for (int i = 0; i < statement.length(); i++) {
+		if (statement[i] != ' ')
+			return statement.substr(i, statement.length() - 1);
+	}
+}
+string trimRight(string statement) {
+	for (int i = statement.length() - 1; i >= 0; i--) {
+		if (statement[i] != ' ')
+			return statement.substr(0, i + 1);
+	}
+}
+string trim(string statement) {
+	return trimLeft(trimRight(statement));
+
+	//statement = trimLeft(statement);
+	//statement = trimRight(statement);
+	//return statement;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string statement = "    Hello WOrld    ";
+// string left = trimLeft(statement);
+// cout << left << " = " << left.length() << endl;
+// string right = trimRight(statement);
+// cout << right << " = " << right.length() << endl;
+// string t = trim(statement);
+// cout << t << " = " << t.length() << endl;
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Join String (Vector)
+// ################################################
+string joinString(vector<string>& vString, string deli=" ") {
+	string newString = "";
+	for (string& word : vString) {
+		newString += word + deli;
+	}
+	return newString.substr(0, newString.length() - deli.length());
+}
+
+// TO USE IT RUN THIS IN MAIN
+//	vector<string> vNames = { "abd", "abdd", "abddd", "abdddd" };
+// cout << joinString(vNames, "####");
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Join String (List) (Overloading) 
+// ################################################
+string joinString(string array[], int arrayLength, string deli = " ") {
+	string newString = "";
+	for (int i = 0; i < arrayLength; i++) {
+		newString += array[i] + deli;
+	}
+	return newString.substr(0, newString.length() - deli.length());
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string names[4] = {"abd", "abdd", "abddd", "abdddd"};
+// cout << joinString(names, 4, "####");
 // #####################################################################################
 
 int main() {
 	// Seeds the random number generator in C++, called only once
 	srand((unsigned)time(NULL));
 
-
+	string names[4] = {"abd", "abdd", "abddd", "abdddd"};
+	cout << joinString(names, 4, "####");
 
 	return 0;
 }
