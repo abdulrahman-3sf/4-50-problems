@@ -1031,7 +1031,7 @@ vector<string> splitString(string statement, string deli=" ") {
 string trimLeft(string statement) {
 	for (int i = 0; i < statement.length(); i++) {
 		if (statement[i] != ' ')
-			return statement.substr(i, statement.length() - 1);
+			return statement.substr(i, statement.length());
 	}
 }
 string trimRight(string statement) {
@@ -1092,12 +1092,48 @@ string joinString(string array[], int arrayLength, string deli = " ") {
 // cout << joinString(names, 4, "####");
 // #####################################################################################
 
+// #####################################################################################
+// ################################################
+//          Reverse Words
+// ################################################
+// string readString()
+string reverseWords(string statement) {
+
+	string newString = "";
+	vector<string> vString = splitString(statement);
+	vector<string>::iterator iter = vString.end();
+
+	while (iter != vString.begin()) {
+		iter--;
+		newString += *iter + ' ';
+	}
+
+	newString = newString.substr(0, newString.length() - 1);
+	return newString;
+
+	//string newWord = "";
+
+	//for (int i = statement.length(); i >= 0; i--) {
+	//	if (statement[i] == ' ') {
+	//		newWord += statement.substr(i + 1, statement.length()) + ' ';
+	//		statement.erase(i, statement.length());
+	//	}
+	//}
+	//if (statement != "")
+	//	newWord += statement;
+
+	//return newWord;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// cout << reverseWords(readString());
+// #####################################################################################
+
 int main() {
 	// Seeds the random number generator in C++, called only once
 	srand((unsigned)time(NULL));
 
-	string names[4] = {"abd", "abdd", "abddd", "abdddd"};
-	cout << joinString(names, 4, "####");
+
 
 	return 0;
 }
