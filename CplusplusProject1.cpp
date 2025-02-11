@@ -1129,11 +1129,71 @@ string reverseWords(string statement) {
 // cout << reverseWords(readString());
 // #####################################################################################
 
+// #####################################################################################
+// ################################################
+//          Replace Words (using built-in)
+// ################################################
+// string readString()
+string replaceWordsUsingReplace(string statement, string currentWord, string newWord) {
+	int pos = 0;
+
+	while ((pos = statement.find(currentWord)) != string::npos) {
+		statement.replace(pos, currentWord.length(), newWord);
+	}
+
+	return statement;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// cout << replaceWordsUsingReplace("Hello ahmed how are you ahmed ?", "ahmed", "ali");
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Replace Words (custom)
+// ################################################
+// string readString()
+// vector<string> splitString(string statement, string deli=" ")
+// string lowerAllLetters(string statement)
+// string joinString(vector<string>& vString, string deli=" ")
+string replaceWords(string statement, string currentWord, string newWord, bool caseSensitive=true) {
+	vector<string> vWords = splitString(statement);
+
+	for (string& word : vWords) {
+		if (caseSensitive) {
+			if (word == currentWord)
+				word = newWord;
+		}
+		else {
+			if (lowerAllLetters(word) == lowerAllLetters(currentWord))
+				word = newWord;
+		}
+	}
+
+	statement = joinString(vWords, " ");
+	return statement;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// cout << replaceWords("Hello ahmed how are you ahmed ?", "Ahmed", "ali") << endl;
+// cout << replaceWords("Hello ahmed how are you ahmed ?", "Ahmed", "ali", false);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          
+// ################################################
+
+
+// TO USE IT RUN THIS IN MAIN
+// #####################################################################################
+
 int main() {
 	// Seeds the random number generator in C++, called only once
 	srand((unsigned)time(NULL));
 
-
+	cout << replaceWords("Hello ahmed how are you ahmed ?", "Ahmed", "ali") << endl;
+	cout << replaceWords("Hello ahmed how are you ahmed ?", "Ahmed", "ali", false);
 
 	return 0;
 }
