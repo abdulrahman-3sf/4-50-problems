@@ -13,6 +13,7 @@
 #include <vector>        // For vector
 #include <cstdlib>       // For random number
 #include <iomanip>       // For setw
+#include <fstream>       // For files
 using namespace std;
 
 // Commnly Use
@@ -1181,19 +1182,317 @@ string replaceWords(string statement, string currentWord, string newWord, bool c
 
 // #####################################################################################
 // ################################################
-//          
+//          Remove Punctuations
 // ################################################
+// readString()
+string removePunctuations(string statement) {
+	string newString;
 
+	for (int i = 0; i < statement.length(); i++) {
+		if (!ispunct(statement[i]))
+			newString += statement[i];
+	}
+
+	//for (int i = 0; i < statement.length(); i++) {
+	//	if ((statement[i] == 32) || (65 <= statement[i] && statement[i] <= 90) || 97 <= statement[i] && statement[i] <= 122)
+	//		newString += statement[i];
+	//}
+
+	return newString;
+}
 
 // TO USE IT RUN THIS IN MAIN
+// cout << removePunctuations("Hello WOrld; it's your name#s or wh!tt") << endl;
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Convert Record to Line
+// ################################################
+struct sPerson {
+	string accountNumber;
+	short pinCode;
+	string name;
+	string phone;
+	int accountBalance;
+	bool deleteMark = false;
+};
+sPerson readNewPerson() {
+	sPerson person;
+
+	cout << "Enter your account number: ";
+	getline(cin >> ws, person.accountNumber);
+
+	cout << "Enter your pin code: ";
+	cin >> person.pinCode;
+	cin.ignore();
+
+	cout << "Enter your name: ";
+	getline(cin, person.name);
+
+	cout << "Enter your phone number: ";
+	getline(cin, person.phone);
+
+	cout << "Enter your account balance: ";
+	cin >> person.accountBalance;
+
+	return person;
+}
+string convertRecoredToLine(sPerson person, string deli="###") {
+	string newString;
+	newString += person.accountNumber + deli 
+		+ to_string(person.pinCode) + deli 
+		+ person.name + deli 
+		+ person.phone 
+		+ deli + to_string(person.accountBalance);
+	return newString;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// sPerson person = readNewPerson();
+// cout << convertRecoredToLine(person);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//       Convert Line Data to Record
+// ################################################
+// struct sPerson
+// readString()
+sPerson convertLineToRecord(string line, string deli="###") {
+	sPerson person;
+	vector<string> personData = splitString(line, deli);
+
+	person.accountNumber = personData[0];
+	person.pinCode = stoi(personData[1]);
+	person.name = personData[2];
+	person.phone = personData[3];
+	person.accountBalance = stoi(personData[4]);
+
+	return person;
+}
+void printStructPerson(sPerson person) {
+	cout << "Accout Number\t: " << person.accountNumber << endl;
+	cout << "Pin Code\t: " << person.pinCode << endl;
+	cout << "Name\t\t: " << person.name << endl;
+	cout << "Phone\t\t: " << person.phone << endl;
+	cout << "Accout Balance\t: " << person.accountBalance << endl;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string line = "A150###1234###Ahmed Ali###079123###50000";
+// sPerson person = convertLineToRecord(line);
+// printStructPerson(person);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Add Clients to File
+// ################################################
+// struct sPerson
+// sPerson readNewPerson()
+// string convertRecoredToLine(sPerson person, string deli="###")
+void addRecoredToFile(string dataLine, string fileName="Person Records.txt") {
+	fstream file;
+	file.open("Person Records.txt", ios::app);
+
+	if (file.is_open()) {
+		file << dataLine << '\n';
+		file.close();
+	}
+
+	cout << "Client Added Successfully";
+}
+void addNewClients() {
+	sPerson person = readNewPerson();
+	addRecoredToFile(convertRecoredToLine(person), "Clients.txt");
+}
+
+// TO USE IT RUN THIS IN MAIN
+// char addMore = 'n';
+// do {
+//  system("cls");
+// 	addNewClients();
+// 	cout << ", do you want to add more clients? (y/n) ";
+// 	cin >> addMore;
+// } while (tolower(addMore) == 'y');
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//        Show All Clients  
+// ################################################
+// sPerson convertLineToRecord(string line, string deli="###")
+void loadClientsDataFromFile(string fileName, vector<sPerson>& vFileContent) {
+	fstream file;
+	file.open(fileName, ios::in);
+
+	if (file.is_open()) {
+		string line;
+		sPerson person;
+
+		while (getline(file, line)) {
+			person = convertLineToRecord(line);
+			vFileContent.push_back(person);
+		}
+
+		file.close();
+	}
+}
+void printClinets(vector<sPerson> clients) {
+
+	cout << "\t\t\t\tClient List (" << clients.size() << ") Client(s)." << endl;
+	cout << "_____________________________________________________________________________________" << endl << endl;
+	cout << "| " << setw(15) << left << "Account Number";
+	cout << "| " << setw(10) << left << "Pic Code";
+	cout << "| " << setw(30) << left << "Client Name";
+	cout << "| " << setw(12) << left << "Phone";
+	cout << "| " << setw(12) << left << "Balance" << endl;
+	cout << "_____________________________________________________________________________________" << endl << endl;
+	
+	for (sPerson& client : clients) {
+		cout << "| " << setw(15) << left << client.accountNumber;
+		cout << "| " << setw(10) << left << client.pinCode;
+		cout << "| " << setw(30) << left << client.name;
+		cout << "| " << setw(12) << left << client.phone;
+		cout << "| " << setw(12) << left << client.accountBalance << endl;
+	}
+	cout << "_____________________________________________________________________________________" << endl;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// vector<sPerson> persons;
+// loadClientsDataFromFile("Persons Records.txt", persons);
+// printClinets(persons);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//        Find Client By Account Number
+// ################################################
+// readString()
+// void loadClientsDataFromFile(string fileName="Person Records.txt", vector<sPerson>& vFileContent)
+bool findClientWithAccountNumber(string accountNumber, vector<sPerson> clients, sPerson& client) {
+	for (sPerson& person : clients) {
+		if (person.accountNumber == accountNumber) {
+			client = person;
+			return true;
+		}
+	}
+	return false;
+}
+// void printStructPerson(sPerson person)
+
+// TO USE IT RUN THIS IN MAIN
+// vector<sPerson> persons;
+// loadClientsDataFromFile("Person Records.txt", persons);
+// string accountNumber = readString();
+// sPerson person;
+// if (findClientWithAccountNumber(accountNumber, persons, person))
+//     printStructPerson(person);
+// else
+//     cout << "Client with account number (" << accountNumber << ") not found!";
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Number Account By Client belete
+// ################################################
+void markClientToDelete(string accountNumber, vector<sPerson>& clients) {
+	for (sPerson& client : clients) {
+		if (client.accountNumber == accountNumber) {
+			client.deleteMark = true;
+			break;
+		}
+	}
+}
+void saveClientsDataToFile(string fileName, vector<sPerson>& clients) {
+	fstream file;
+	file.open(fileName, ios::out);
+
+	if (file.is_open()) {
+		for (sPerson& client : clients) {
+			if (!client.deleteMark) {
+				file << convertRecoredToLine(client) << endl;
+			}
+		}
+
+		file.close();
+	}
+}
+void deleteClientByAccountNumber(string accountNumber, vector<sPerson>& clients) {
+	sPerson person;
+	char areYouSure = 'n';
+
+	if (findClientWithAccountNumber(accountNumber, clients, person)) {
+		printStructPerson(person);
+
+		cout << "\nAre you sure you want to delete the account? (y/n) ";
+		cin >> areYouSure;
+
+		if (tolower(areYouSure) == 'y') {
+			markClientToDelete(accountNumber, clients);
+			saveClientsDataToFile("Person Records.txt", clients);
+		}
+
+		cout << "Deleted Successfully!";
+	}
+	else {
+		cout << "The client with account number (" << accountNumber << ") not found!";
+	}
+}
+
+// TO USE IT RUN THIS IN MAIN
+// vector<sPerson> persons;
+// loadClientsDataFromFile("Person Records.txt", persons);
+// deleteClientByAccountNumber(readString(), persons);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//       Update Client By Account Number   
+// ################################################
+// sPerson readNewPerson()
+// void saveClientsDataToFile(string fileName, vector<sPerson>& clients)
+void updateClientByAccountNumber(string accountNumber, vector<sPerson>& clients) {
+	sPerson person;
+	char updateIt = 'n';
+
+	if (findClientWithAccountNumber(accountNumber, clients, person)) {
+		printStructPerson(person);
+
+		cout << "\nAre you sure you want to update the client? (y/n) ";
+		cin >> updateIt;
+
+		if (tolower(updateIt) == 'y') {
+			for (sPerson& client : clients) {
+				if (client.accountNumber == accountNumber) {
+					client = readNewPerson();
+					break;
+				}
+			}
+			saveClientsDataToFile("Person Records.txt", clients);
+			cout << "\nUpdate Seccessfully!";
+		}
+		else {
+			cout << "The client with account number (" << accountNumber << ") not found!";
+		}
+
+		
+	}
+}
+
+// TO USE IT RUN THIS IN MAIN
+// vector<sPerson> persons;
+// loadClientsDataFromFile("Person Records.txt", persons);
+// updateClientByAccountNumber(readString(), persons);
 // #####################################################################################
 
 int main() {
 	// Seeds the random number generator in C++, called only once
 	srand((unsigned)time(NULL));
 
-	cout << replaceWords("Hello ahmed how are you ahmed ?", "Ahmed", "ali") << endl;
-	cout << replaceWords("Hello ahmed how are you ahmed ?", "Ahmed", "ali", false);
+
 
 	return 0;
 }
