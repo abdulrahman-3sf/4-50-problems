@@ -8,6 +8,7 @@
 
 // #####################################################################################
 
+#pragma warning(disable: 4996)
 #include <iostream>      // For cin, cout
 #include <string>        // For string
 #include <vector>        // For vector
@@ -240,7 +241,7 @@ short numberOfDaysInMonthBEST(short year, short month) {
 //          Day Name
 // ################################################
 // short readNumber()
-short weakDayOrder(short year, short month, short day) {
+short weekDayOrder(short year, short month, short day) {
 	short a = floor((14 - month) / 12);
 	short y = year - a;
 	short m = month + (12 * a) - 2;
@@ -249,16 +250,16 @@ short weakDayOrder(short year, short month, short day) {
 
 	return d;
 }
-string weakDayName(short day) {
+string weekDayName(short day) {
 	string days[7] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 	return days[day];
 }
 void printDayTextFromDate(short year, short month, short day) {
-	short weakDay = weakDayOrder(year, month, day);
+	short weekDay = weekDayOrder(year, month, day);
 
 	cout << "Date     : " << day << '/' << month << '/' << year << endl;
-	cout << "Day Order: " << weakDay << endl;
-	cout << "Day Name : " << weakDayName(weakDay);
+	cout << "Day Order: " << weekDay << endl;
+	cout << "Day Name : " << weekDayName(weekDay);
 }
 
 // TO USE IT RUN THIS IN MAIN
@@ -275,13 +276,13 @@ void printDayTextFromDate(short year, short month, short day) {
 // short readNumber()
 // bool isLeapYear(short year)
 // short numberOfDaysInMonthBEST(short year, short month)
-// short weakDayOrder(short year, short month, short day)
+// short weekDayOrder(short year, short month, short day)
 string monthName(short month) {
 	string months[12] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 	return months[month];
 }
 void printMonthCalendar(short year, short month) {
-	short startDay = weakDayOrder(year, month, 1);
+	short startDay = weekDayOrder(year, month, 1);
 	short numberOfDays = numberOfDaysInMonthBEST(year, month);
 	short counter = 1, continueTheCount = startDay;
 
@@ -373,11 +374,564 @@ short daysFromDayOneToSpecificDateinYear(short year, short month, short days) {
 
 // #####################################################################################
 // ################################################
-//          
+//          Date from bay Order In a Year
 // ################################################
+// short numberOfDaysInMonthBEST(short year, short month)
+struct stDate {
+	short year;
+	short month;
+	short day;
+};
+stDate specificDateFromDateOrderInYear(short daysOrdershort, short year) {
+	stDate date;
+	short remainingDays = daysOrdershort;
+	short monthDays = 0;
+	date.year = year;
+	date.month = 1;
 
+	while (true) {
+		monthDays = numberOfDaysInMonthBEST(year, date.month);
+		if (remainingDays > monthDays) {
+			remainingDays -= monthDays;
+			date.month++;
+
+			if (date.month > 12) {
+				date.year++;
+				date.month = 1;
+			}
+		}
+		else {
+			date.day = remainingDays;
+			break;
+		}
+	}
+
+	return date;
+}
 
 // TO USE IT RUN THIS IN MAIN
+// short year = readNumber("year: ");
+// short month = readNumber("month: ");
+// short days = readNumber("days: ");
+// short daysOrderd = daysFromDayOneToSpecificDateinYear(year, month, days);
+// stDate dateOrderd = specificDateFromDateOrderInYear(daysOrderd, year);
+// cout << daysOrderd << endl;
+// cout << dateOrderd.day << '/' << dateOrderd.month << '/' << dateOrderd.year;
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Add Days to Date
+// ################################################
+// struct stDate
+stDate readDate() {
+	stDate date;
+
+	cout << "Year: ";
+	cin >> date.year;
+
+	cout << "Month: ";
+	cin >> date.month;
+
+	cout << "Days: ";
+	cin >> date.day;
+
+	return date;
+}
+// short daysFromDayOneToSpecificDateinYear(short year, short month, short days)
+// stDate specificDateFromDateOrderInYear(short daysOrdershort, short year)
+stDate addDaysToDate(stDate date, short daysToAdd) {
+	short dateInDaysOrder = daysFromDayOneToSpecificDateinYear(date.year, date.month, date.day);
+	short totalDays = dateInDaysOrder + daysToAdd;
+
+	return specificDateFromDateOrderInYear(totalDays, date.year);
+}
+
+// TO USE IT RUN THIS IN MAIN
+// short year = readNumber("year: ");
+// short month = readNumber("month: ");
+// short days = readNumber("days: ");
+// short daysToAdd = readNumber("days to add: ");
+// stDate date = addDaysToDate(year, month, days, daysToAdd);
+// cout << date.day << '/' << date.month << '/' << date.year;
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Date1 Greater than Date2
+// ################################################
+// struct stDate
+// stDate readDate()
+bool date1LessThanDate2(stDate date1, stDate date2) {
+
+	return (date1.year < date2.year) ? true : ((date1.year == date2.year) ? (date1.month < date2.month ? true : (date1.month == date2.month ? date1.day < date2.day : false)) : false);
+
+	/*short date1Days = daysFromDayOneToSpecificDateinYear(date1.year, date1.month, date1.day);
+	short date2Days = daysFromDayOneToSpecificDateinYear(date2.year, date2.month, date2.day);
+	return date1Days > date2Days;*/
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stDate date1 = readDate();
+// stDate date2 = readDate();
+// cout << date1GreaterThanDate2(date1, date2);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Date1 Equal than Date2
+// ################################################
+// struct stDate
+// stDate readDate()
+bool date1EqualToDate2(stDate date1, stDate date2) {
+	return (date1.year == date2.year) ? ((date1.month == date1.month) ? (date1.day == date2.day) : false) : false;
+	// return (date1.year == date2.year && date1.month == date1.month && date1.day == date2.day);
+}
+
+// TO USE IT RUN THIS IN MAIN
+// // stDate date1 = readDate();
+// stDate date2 = readDate();
+// cout << date1EqualToDate2(date1, date2);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Last Day, Last Month
+// ################################################
+// struct stDate
+// stDate readDate()
+// short numberOfDaysInMonthBEST(short year, short month)
+bool lastMonthInYear(short month) {
+	return month == 12;
+}
+bool lastDayInMonth(stDate date) {
+	return date.day == numberOfDaysInMonthBEST(date.year, date.month);
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stDate date = readDate();
+// cout << lastMonthInYear(date.month) << endl;
+// cout << lastDayInMonth(date) << endl;
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Increase Date By One Day
+// ################################################
+// struct stDate
+// stDate readDate()
+// short numberOfDaysInMonthBEST(short year, short month)
+// bool lastMonthInYear(short month)
+// bool lastDayInMonth(stDate date)
+stDate increaseDateByOneDay(stDate date) {
+	if (lastDayInMonth(date)) {
+		if (lastMonthInYear(date.month)) {
+			date.year++;
+			date.month = 1;
+			date.day = 1;
+		}
+		else {
+			date.month++;
+			date.day = 1;
+		}
+	} 
+	else {
+		date.day++;
+	}
+	return date;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stDate date = readDate();
+// date = increaseDateByOneDay(date);
+// cout << date.day << " " << date.month << " " << date.year << endl;
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Diff in Days
+// ################################################
+// struct stDate
+// stDate readDate()
+// short daysFromDayOneToSpecificDateinYear(short year, short month, short days)
+void swapDates(stDate& date1, stDate& date2) {
+	stDate temp;
+	
+	temp.year = date1.year;
+	temp.month = date1.month;
+	temp.day = date1.day;
+
+	date1.year = date2.year;
+	date1.month = date2.month;
+	date1.day = date2.day;
+
+	date2.year = temp.year;
+	date2.month = temp.month;
+	date2.day = temp.day;
+}
+short diffBetweenTwoDates(stDate date1, stDate date2, bool endDayIncluded=false) {
+	int days = 0;
+	short swapFlagValue = 1;
+
+	if (!date1LessThanDate2(date1, date2)) {
+		swapFlagValue = -1;
+		swapDates(date1, date2);
+	}
+
+	while (date1LessThanDate2(date1, date2)) {
+		days++;
+		date1 = increaseDateByOneDay(date1);
+	}
+	return endDayIncluded ? ++days * swapFlagValue : days * swapFlagValue;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stDate date = readDate();
+// stDate date2 = readDate();
+// cout << diffBetweenTwoDates(date, date2) << endl;
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Age in Days
+// ################################################
+// struct stDate
+// stDate readDate()
+// short diffBetweenTwoDates(stDate date1, stDate date2, bool endDayIncluded=false)
+stDate systemDate() {
+	stDate date;
+
+	time_t t = time(0);
+	tm* now = localtime(&t);
+
+	date.year = now->tm_year + 1900;
+	date.month = now->tm_mon + 1;
+	date.day = now->tm_mday;
+
+	return date;
+}
+int ageInDays(stDate age, stDate date) {
+	return diffBetweenTwoDates(age, date, true);
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stDate age = readDate();
+// stDate date = systemDate();
+// cout << ageInDays(age, date);
+// #####################################################################################
+
+// #####################################################################################
+// ######################################################
+//          Increase Date Problems (13 Problem)
+// ######################################################
+// struct stDate
+// stDate readDate()
+// stDate increaseDateByOneDay(stDate date)
+stDate increaseDateByXDays(int x, stDate date) {
+	for (int i = 0; i < x; i++) {
+		date = increaseDateByOneDay(date);
+	}
+	return date;
+}
+
+// short daysFromDayOneToSpecificDateinYear(short year, short month, short days)
+// stDate specificDateFromDateOrderInYear(short daysOrdershort, short year)
+stDate increaseDateByOneWeek(stDate date) {
+	for (int i = 0; i < 7; i++) {
+		date = increaseDateByOneDay(date);
+	}
+	return date;
+}
+stDate increaseDateByXWeeks(int x, stDate date) {
+	for (int i = 0; i < x; i++) {
+		date = increaseDateByOneWeek(date);
+	}
+	return date;
+}
+
+stDate increaseDateByOneMonth(stDate date) {
+	if (lastMonthInYear(date.month)) {
+		date.month = 1;
+		date.year++;
+	}
+	else {
+		date.month++;
+	}
+	
+	short monthDays = numberOfDaysInMonthBEST(date.year, date.month);
+	if (date.day > monthDays)
+		date.day = monthDays;
+	
+	return date;
+}
+stDate increaseDateByXMonth(int x, stDate date) {
+	for (int i = 0; i < x; i++) {
+		date = increaseDateByOneMonth(date);
+	}
+	return date;
+}
+
+stDate increaseDateByOneYear(stDate date) {
+	date.year++;
+	return date;
+}
+stDate increaseDateByXYear(int x, stDate date) {
+	for (int i = 0; i < x; i++) {
+		date = increaseDateByOneYear(date);
+	}
+	return date;
+}
+stDate increaseDateByXYearFASTER(int x, stDate date) {
+	date.year += x;
+	return date;
+}
+
+stDate increaseDateByOneDecade(stDate date) {
+	date.year += 10;
+	return date;
+}
+stDate increaseDateByXDecade(int x, stDate date) {
+	for (int i = 0; i < x; i++) {
+		date = increaseDateByOneDecade(date);
+	}
+	return date;
+}
+stDate increaseDateByXDecadeFASTER(int x, stDate date) {
+	date.year += (x * 10);
+	return date;
+}
+
+stDate increaseDateByOneCentury(stDate date) {
+	date.year += 100;
+	return date;
+}
+stDate increaseDateByOneMillennium(stDate date) {
+	date.year += 1000;
+	return date;
+}
+
+// #####################################################################################
+
+// #####################################################################################
+// ######################################################
+//          Decrease Date Problems (14 Problem)
+// ######################################################
+stDate DecreaseDateByOneDay(stDate date) {
+	if (date.day == 1) {
+		if (date.month == 1) {
+			date.year--;
+			date.month = 12;
+			date.day = 31;
+		}
+		else {
+			date.month--;
+			date.day = numberOfDaysInMonthBEST(date.year, date.month);
+		}
+	}
+	else {
+		date.day--;
+	}
+	return date;
+}
+stDate DecreaseDateByXDays(int x, stDate date) {
+	for (int i = 0; i < x; i++) {
+		date = DecreaseDateByOneDay(date);
+	}
+	return date;
+}
+
+stDate DecreaseDateByOneWeek(stDate date) {
+	for (int i = 0; i < 7; i++) {
+		date = DecreaseDateByOneDay(date);
+	}
+	return date;
+}
+stDate DecreaseDateByXWeeks(int x, stDate date) {
+	for (int i = 0; i < x; i++) {
+		date = DecreaseDateByOneWeek(date);
+	}
+	return date;
+}
+
+stDate DecreaseDateByOneMonth(stDate date) {
+	if (date.month == 1) {
+		date.month = 12;
+		date.year--;
+	}
+	else {
+		date.month--;
+	}
+
+	short monthDays = numberOfDaysInMonthBEST(date.year, date.month);
+	if (date.day > monthDays)
+		date.day = monthDays;
+
+	return date;
+}
+stDate DecreaseDateByXMonth(int x, stDate date) {
+	for (int i = 0; i < x; i++) {
+		date = DecreaseDateByOneMonth(date);
+	}
+	return date;
+}
+
+stDate DecreaseDateByOneYear(stDate date) {
+	date.year--;
+	return date;
+}
+stDate DecreaseDateByXYear(int x, stDate date) {
+	for (int i = 0; i < x; i++) {
+		date = DecreaseDateByOneYear(date);
+	}
+	return date;
+}
+stDate DecreaseDateByXYearFASTER(int x, stDate date) {
+	date.year -= x;
+	return date;
+}
+
+stDate DecreaseDateByOneDecade(stDate date) {
+	date.year -= 10;
+	return date;
+}
+stDate DecreaseDateByXDecade(int x, stDate date) {
+	for (int i = 0; i < x; i++) {
+		date = DecreaseDateByOneDecade(date);
+	}
+	return date;
+}
+stDate DecreaseDateByXDecadeFASTER(int x, stDate date) {
+	date.year -= (x * 10);
+	return date;
+}
+
+stDate DecreaseDateByOneCentury(stDate date) {
+	date.year -= 100;
+	return date;
+}
+stDate DecreaseDateByOneMillennium(stDate date) {
+	date.year -= 1000;
+	return date;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Date Problems (7 Problem)
+// ################################################
+short weekDayOrder(stDate date) {
+	return weekDayOrder(date.year, date.month, date.day);
+}
+// string weekDayName(short day)
+
+void printTodayDate(stDate date) {
+	short weekDay = weekDayOrder(date);
+	cout << "Today is " << weekDayName(weekDay) << ", " << date.day << '/' << date.month << '/' << date.year << endl;
+}
+
+bool isEndOfWeek(stDate date) {
+	return weekDayOrder(date) == 6;
+}
+bool isWeekEnd(stDate date) {
+	short weekDay = weekDayOrder(date);
+	return weekDay == 5 || weekDay == 6;
+	//short weekDay = weekDayOrder(date);
+	//if (weekDay == 5 || weekDay == 6)
+	//	return true;
+	//return false;
+}
+bool isBusinessDay(stDate date) {
+	return (!isWeekEnd(date));
+
+	//short weekDay = weekDayOrder(date);
+	//return weekDay != 5 && weekDay != 6;
+
+	//short weekDay = weekDayOrder(date);
+	//if (weekDay != 5 && weekDay != 6)
+	//	return true;
+	//return false;
+}
+
+short daysUntilTheEndOfWeek(stDate date) {
+	return 6 - weekDayOrder(date);
+	//short weekDay = weekDayOrder(date);
+	//return 6 - weekDay;
+}
+short daysUntilTheEndOfMonth(stDate date) {
+	short monthDays = numberOfDaysInMonthBEST(date.year, date.month);
+	return monthDays - date.day + 1;
+}
+short daysUntilTheEndOfYear(stDate date) {
+	short currentDate = daysFromDayOneToSpecificDateinYear(date.year, date.month, date.day);
+	short endDate = daysFromDayOneToSpecificDateinYear(date.year, 12, 31);
+
+	return endDate - currentDate + 1;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stDate date = readDate();
+// printTodayDate(date);
+// cout << isEndOfWeek(date) << endl;
+// cout << isWeekEnd(date) << endl;
+// cout << isBusinessDay(date) << endl;
+// cout << daysUntilTheEndOfWeek(date) << endl;
+// cout << daysUntilTheEndOfMonth(date) << endl;
+// cout << daysUntilTheEndOfYear(date) << endl;
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Calculate Vacation Days
+// ################################################
+short calculateVacationDays(stDate startDate, stDate endDate) {
+	short daysCount = 0;
+	while (date1LessThanDate2(startDate, endDate)) {
+		if (isBusinessDay(startDate))
+			daysCount++;
+		startDate = increaseDateByOneDay(startDate);
+	}
+	return daysCount;
+	/*short weekEndsDays = 0;
+	short totalDays = diffBetweenTwoDates(startDate, endDate, true);
+
+	while (date1LessThanDate2(startDate, endDate)) {
+		if (isWeekEnd(startDate))
+			weekEndsDays++;
+		startDate = increaseDateByOneDay(startDate);
+	}
+	if (isWeekEnd(startDate))
+		weekEndsDays++;
+
+	return totalDays - weekEndsDays;*/
+}
+
+// TO USE IT RUN THIS IN MAIN
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//       Calculate Vacation Return Date   
+// ################################################
+stDate calculateVacationReturnDate(stDate startDate, short vacationDays) {
+	short daysCount = 0;
+
+	while (daysCount != vacationDays) {
+		if (isBusinessDay(startDate)) {
+			daysCount++;
+		}
+		startDate = increaseDateByOneDay(startDate);
+	}
+
+	return startDate;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stDate startDate = readDate();
+// short vacationDays = readNumber("Enter Days Vacations: ");
+// stDate endDate = calculateVacationReturnDate(startDate, vacationDays);
+// cout << endDate.day << '/' << endDate.month << '/' << endDate.year;
 // #####################################################################################
 
 int main() {
