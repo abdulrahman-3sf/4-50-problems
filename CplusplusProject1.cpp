@@ -934,11 +934,128 @@ stDate calculateVacationReturnDate(stDate startDate, short vacationDays) {
 // cout << endDate.day << '/' << endDate.month << '/' << endDate.year;
 // #####################################################################################
 
+// #####################################################################################
+// ################################################
+//          Is Date1 After Date2
+// ################################################
+bool isDate1AfterDate2(stDate date1, stDate date2) {
+	return (!date1LessThanDate2(date1, date2)) && (!date1EqualToDate2(date1, date2));
+	// return (date1.year > date2.year) ? true : ((date1.year == date2.year) ? ((date1.month > date2.month) ? (date1.day > date2.day) : (false)) : (false));
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stDate date = readDate();
+// stDate date2 = readDate();
+// cout << isDate1AfterDate2(date, date2);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Compare Date Function
+// ################################################
+short compareDate(stDate date, stDate date2) {
+	return (date1LessThanDate2(date, date2) ? -1 : date1EqualToDate2(date, date2) ? 0 : 1);
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stDate date = readDate();
+// stDate date2 = readDate();
+// cout << compareDate(date, date2);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Is Overlap Periods
+// ################################################
+struct stPeriod {
+	stDate startDate;
+	stDate endDate;
+};
+stPeriod readPeriod() {
+	stPeriod peroid;
+
+	cout << "Peroid One: " << endl;
+	peroid.startDate = readDate();
+
+	cout << "Peroid Two: " << endl;
+	peroid.endDate = readDate();
+
+	return peroid;
+}
+bool isOverLapPeriods(stPeriod peroid1, stPeriod peroid2) {
+	if (compareDate(peroid1.endDate, peroid2.startDate) == -1 || compareDate(peroid2.endDate, peroid1.startDate) == -1)
+		return false;
+	return true;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stPeroid peroidOne = readPeroid();
+// stPeroid peroidTwo = readPeroid();
+// cout << isOverLapPeriods(peroidOne, peroidTwo);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//         Period Length In bays 
+// ################################################
+// short diffBetweenTwoDates(stDate date1, stDate date2, bool endDayIncluded=false)
+
+// TO USE IT RUN THIS IN MAIN
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Is Date In Period
+// ################################################
+bool isDateInPeriod(stDate date, stPeriod period) {
+	if (!date1LessThanDate2(date, period.startDate) && !isDate1AfterDate2(date, period.endDate))
+		return true;
+	return false;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stPeriod periodOne = readPeriod();
+// stDate date = readDate();
+// cout << isDateInPeriod(date, periodOne);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Count Overlap Days
+// ################################################
+short countOverlapDays(stPeriod period1, stPeriod period2) {
+	short days = 0;
+	if (isOverLapPeriods(period1, period2)) {
+		while (compareDate(period2.startDate, period1.endDate) != 0) {
+			days++;
+			period2.startDate = increaseDateByOneDay(period2.startDate);
+		}
+	}
+	return days;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// stPeriod period1 = readPeriod();
+// stPeriod period2 = readPeriod();
+// cout << endl << countOverlapDays(period1, period2);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          
+// ################################################
+
+
+// TO USE IT RUN THIS IN MAIN
+// #####################################################################################
+
 int main() {
 	// Seeds the random number generator in C++, called only once
 	srand((unsigned)time(NULL));
-
 	
+	stPeriod period1 = readPeriod();
+	stPeriod period2 = readPeriod();
+	cout << endl << countOverlapDays(period1, period2);
 
 	return 0;
 }
