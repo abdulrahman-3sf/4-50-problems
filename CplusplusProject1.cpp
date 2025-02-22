@@ -1042,20 +1042,97 @@ short countOverlapDays(stPeriod period1, stPeriod period2) {
 
 // #####################################################################################
 // ################################################
-//          
+//          Validate Date
 // ################################################
+bool validateDate(stDate date) {
+	if (date.year < 0)
+		return false;
+	
+	if (date.month < 1 || 12 < date.month)
+		return false;
 
+	if (date.day < 1 || numberOfDaysInMonthBEST(date.year, date.month) < date.day)
+		return false;
+
+	return true;
+}
 
 // TO USE IT RUN THIS IN MAIN
+// stDate date = readDate();
+// cout << endl << validateDate(date);
+// #####################################################################################
+
+// #####################################################################################
+// ################################################
+//          Read/Print Date String
+// ################################################
+vector<string> splitString(string text, string deli=" ") {
+	vector<string> vText;
+	int pos = 0;
+	string newText = "";
+
+	while ((pos = text.find('/')) != string::npos) {
+		newText = text.substr(0, pos);
+		if (newText != "")
+			vText.push_back(newText);
+		text.erase(0, pos + 1);
+	}
+	if (newText != "")
+		vText.push_back(text);
+
+	return vText;
+}
+stDate convertStringToDate(string stringDate) {
+	stDate date;
+	vector<string> splitedDate = splitString(stringDate, "/");
+
+	date.day = stoi(splitedDate[0]);
+	date.month = stoi(splitedDate[1]);
+	date.year = stoi(splitedDate[2]);
+
+	return date;
+}
+string convertDateToString(stDate date) {
+	string stringDate = to_string(date.day) + '/' + to_string(date.month) + '/' + to_string(date.year);
+	return stringDate;
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string stringDate = "31/3/2022";
+// stDate date = convertStringToDate(stringDate);
+// cout << date.day << " " << date.month << " " << date.year << endl;
+// cout << convertDateToString(date);
+// #####################################################################################
+
+// #####################################################################################
+// ###############################################################################
+//          Format Date (use replaceWordInString to git the most of it)
+// ###############################################################################
+// Bad Way :|
+string formatDate(stDate date, string format = "dd/mm/yyyy") {
+	if (format == "dd/mm/yyyy")
+		return to_string(date.day) + '/' + to_string(date.month) + '/' + to_string(date.year);
+	else if (format == "yyyy/dd/mm")
+		return to_string(date.year) + '/' + to_string(date.day) + '/' + to_string(date.month);
+	else if (format == "mm/dd/yyyy")
+		return to_string(date.month) + '/' + to_string(date.day) + '/' + to_string(date.year);
+	else if (format == "mm-dd-yyyy")
+		return to_string(date.month) + '-' + to_string(date.day) + '-' + to_string(date.year);
+	else if (format == "dd-mm-yyyy")
+		return to_string(date.day) + '-' + to_string(date.month) + '-' + to_string(date.year);
+	else
+		return "Day: " + to_string(date.day) + ", Month: " + to_string(date.month) + ", Year: " + to_string(date.year);
+}
+
+// TO USE IT RUN THIS IN MAIN
+// string stringDate = "31/3/2022";
+// stDate date = convertStringToDate(stringDate);
+// cout << formatDate(date, "daff");
 // #####################################################################################
 
 int main() {
 	// Seeds the random number generator in C++, called only once
 	srand((unsigned)time(NULL));
 	
-	stPeriod period1 = readPeriod();
-	stPeriod period2 = readPeriod();
-	cout << endl << countOverlapDays(period1, period2);
-
 	return 0;
 }
